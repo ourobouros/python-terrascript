@@ -11,6 +11,7 @@ jobs:
     strategy:
       matrix:
         python-version: [3.6, 3.7, 3.8]
+        terraform-version: [0.12.15, 10.12.16, 0.12.17, 0.12.18, 0.12.19]
 
     steps:
     - uses: actions/checkout@v2
@@ -24,8 +25,8 @@ jobs:
         pip install -r test_requirements.txt
     - name: Install Terraform
       run: |
-        wget https://releases.hashicorp.com/terraform/0.12.19/terraform_0.12.19_linux_amd64.zip
-        unzip terraform_0.12.19_linux_amd64.zip
+        wget https://releases.hashicorp.com/terraform/${{ matrix.terraform-version }}/terraform_${{ matrix.terraform-version }}_linux_amd64.zip
+        unzip terraform_${{ matrix.terraform-version }}_linux_amd64.zip
         sudo install -m 755 terraform /usr/local/bin/terraform
     - name: Test with pytest
       run: |
